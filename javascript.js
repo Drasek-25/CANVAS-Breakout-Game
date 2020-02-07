@@ -13,10 +13,41 @@ let ballx = ballSpeed;
 let bally = -ballSpeed;
 let ballRad = 8;
 
-let paddleSpeed = 8
+
+let paddleSpeed = 8;
 let paddleWidth = 80;
 let paddleHeight = 12;
 let paddleX = (canvas.width - paddleWidth) / 2;
+
+let blockWidth = 30;
+let blockHeight = 15;
+let blockGroupMargin = 30;
+let blockArrayWidth = 16;
+let blockArrayHeight = 16;
+let blockX;
+let blockY;
+let blockWidthSpacer = (((canvas.width - (blockGroupMargin * 2)) - (blockWidth * blockArrayWidth)) / (blockArrayWidth - 1));
+let blockHeightSpacer = blockHeight + blockWidthSpacer;
+console.log(blockWidthSpacer);
+let blockArray = [
+    [0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0],
+    [0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0],
+    [0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0],
+    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+    [0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0],
+    [0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0],
+    [0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0]
+
+]
 
 
 
@@ -62,6 +93,14 @@ function drawPaddle() {
     ctx.closePath();
 }
 
+function drawBlock()    {
+    ctx.beginPath();
+    ctx.rect(blockX, blockY, blockWidth, blockHeight);
+    ctx.fillstyle = "blue";
+    ctx.fill();
+    ctx.closePath(); 
+}
+
 
 function draw() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -70,6 +109,21 @@ function draw() {
 
     x += ballx;
     y += bally;
+
+    
+    blockY = 10;
+
+    for (a = 0; blockArray.length > a  ; a++) {
+        blockX = blockGroupMargin-(blockWidth+blockWidthSpacer);
+        blockY += blockHeightSpacer;
+        for (b = 0; blockArray[a].length > b  ; b++) {
+            if (b === 0 && blockArray[a][b] !== 0);
+            blockX += (blockWidth+blockWidthSpacer);
+            if (blockArray[a][b] !== 0) {
+                drawBlock();
+            }
+        }
+    }
 
     if (rightPressed) {
         paddleX += paddleSpeed;
@@ -90,7 +144,6 @@ function draw() {
     } else if ((y + bally > canvas.height - ballRad) || (y + bally < ballRad)) {
         bally = -bally;
     } else if ((y + bally == canvas.height - paddleElevation) && ((x > paddleX) && (x < paddleX + paddleWidth))) {
-        console.log(y + ' ' + ' ' + bally + ' ' + ' ' + canvas.height)
         bally = -bally;
     } else if (y + bally > canvas.height - paddleElevation) {
         console.log('loser');
