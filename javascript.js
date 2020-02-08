@@ -2,19 +2,19 @@ let canvas = document.getElementById("myCanvas");
 //600x800
 let ctx = canvas.getContext("2d");
 
-let frameRate = 10;
+let frameRate = 1;
 let paddleElevation = 78;
 let x = canvas.width / 2;
 let y = canvas.height - paddleElevation;
 
 
-let ballSpeed = 8;
+let ballSpeed = 1;
 let ballx = ballSpeed;
 let bally = -ballSpeed;
 let ballRad = 8;
 
 
-let paddleSpeed = 8;
+let paddleSpeed = 3;
 let paddleWidth = 80;
 let paddleHeight = 12;
 let paddleX = (canvas.width - paddleWidth) / 2;
@@ -30,9 +30,6 @@ let blockWidthSpacer = (((canvas.width - (blockGroupMargin * 2)) - (blockWidth *
 let blockHeightSpacer = blockHeight + blockWidthSpacer;
 console.log(blockWidthSpacer);
 let blockArray = [
-    [0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0],
-    [0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0],
-    [0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0],
     [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
     [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
     [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
@@ -43,11 +40,14 @@ let blockArray = [
     [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
     [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
     [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-    [0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0],
-    [0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0],
-    [0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0]
+    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
+];
 
-]
 
 
 
@@ -93,12 +93,12 @@ function drawPaddle() {
     ctx.closePath();
 }
 
-function drawBlock()    {
+function drawBlock() {
     ctx.beginPath();
     ctx.rect(blockX, blockY, blockWidth, blockHeight);
     ctx.fillstyle = "blue";
     ctx.fill();
-    ctx.closePath(); 
+    ctx.closePath();
 }
 
 
@@ -110,20 +110,41 @@ function draw() {
     x += ballx;
     y += bally;
 
-    
-    blockY = 10;
 
-    for (a = 0; blockArray.length > a  ; a++) {
-        blockX = blockGroupMargin-(blockWidth+blockWidthSpacer);
+    blockY = 10;
+    let blockArrayExisting = [];
+
+    for (a = 0; blockArray.length - 1 >= a; a++) {
+        blockX = blockGroupMargin - (blockWidth + blockWidthSpacer);
         blockY += blockHeightSpacer;
-        for (b = 0; blockArray[a].length > b  ; b++) {
+        blockArrayExisting.push([]);
+        for (b = 0; blockArray[a].length - 1 >= b; b++) {
             if (b === 0 && blockArray[a][b] !== 0);
-            blockX += (blockWidth+blockWidthSpacer);
+            blockX += (blockWidth + blockWidthSpacer);
+            blockArrayExisting[a].push([blockArray[a][b], blockX, blockY]);
             if (blockArray[a][b] !== 0) {
                 drawBlock();
             }
         }
     }
+
+    for (c = 0; c <= blockArrayExisting.length - 1; c++) {
+        for (d = 0; d <= blockArrayExisting[c].length - 1; d++) {
+            if (blockArrayExisting[c][d][0] !== 0) {
+                //bottom of brick horizontal collision
+                if ((y - ballRad == blockArrayExisting[c][d][2] + blockArrayHeight) && (x + ballRad >= blockArrayExisting[c][d][1]) && (x - ballRad <= blockArrayExisting[c][d][1] + blockWidth)) {
+                    bally = -bally;
+                    blockArray[c].splice(d, 1, 0);
+                    // } else if ((y + bally == blockArrayExisting[c][d][2] + blockArrayHeight) && ((x >= blockArrayExisting[c][d][1]) && (x < blockArrayExisting[c][d][1] + blockWidth))) {
+                    //     ballx = -ballx;
+                    //     blockArray[c].splice(d, 1, 0);
+                    // }
+                }
+            }
+        }
+    }
+
+
 
     if (rightPressed) {
         paddleX += paddleSpeed;
@@ -149,8 +170,6 @@ function draw() {
         console.log('loser');
     }
 }
-
-
 
 
 
