@@ -20,7 +20,7 @@ canvas {
     height: 400px;
     vertical-align: middle;
     position: absolute;
-    margin-top: 25%;
+    margin-top:200px;
     display: flex;
     flex-direction: column;
     background-color: rgb(97, 167, 177);

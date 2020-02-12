@@ -98,8 +98,20 @@ function drawBlock() {
     ctx.closePath();
 }
 
+function startStop(){
+    paused = false;
+    menuChange(0);
+}
+function menuChange(num){
+    if (num===0){
+    document.getElementById('menu').style.display = "none";
+    } else if (num===1) {
+    document.getElementById('menu').style.display = "flex";
+    }
+}
+
 //Primary Game Loop
-let paused = false;
+let paused = true;
 function draw() {
     function togglePause() {
         if (paused === true) {
@@ -194,6 +206,7 @@ function draw() {
                 y = canvas.height - paddleElevation - ballRad;
                 paddleX = (canvas.width - paddleWidth) / 2;
                 paused = true;
+                menuChange(1);
             }
         }
     }
