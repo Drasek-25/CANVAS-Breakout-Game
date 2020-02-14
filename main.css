@@ -1,6 +1,7 @@
 * {
   padding: 0;
   margin: 0;
+  text-decoration: none;
 }
 
 canvas {
@@ -21,7 +22,6 @@ canvas {
     vertical-align: middle;
     position: absolute;
     margin-top:200px;
-    display: flex;
     flex-direction: column;
     background-color: rgb(97, 167, 177);
     justify-content: space-between;
@@ -31,13 +31,69 @@ h1{
     margin: 50px 0px;
     text-align: center;
     font-family: Arial, Helvetica, sans-serif;
-    font-size: 304x;
+    font-size: 30px;
     color: #eee;
     font-weight: bold;
+}
+h3{
+  text-align: center;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 20px;
+  color: #eee;
+  font-weight: bold;
 }
 input{
     margin: auto;
     width: 80%;
     height: 10%;
     box-shadow: -2px 2px #5F5F5F;
+}
+#gameOverMenu {
+  display: none;
+}
+#pauseMenu {
+  display: none;
+}
+#startMenu {
+  display: flex;
+}
+#aboutMenu {
+  display: none;
+}
+.headsUp  {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  vertical-align: bottom;
+  position: absolute;
+  margin-top: 760px;
+  width: 600px;
+  height: 12px;
+}
+.headsUp span {
+  text-align: center;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 20px;
+  color: black;
+  font-weight: bold;
+  margin: 0px, auto;
+}
+.headsUpCol {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin: auto;
+}
+h5 {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 16px;
+}
+
+p {
+  margin: 50px 0px;
+  text-align: center;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 20px;
+  color: #eee;
+  padding: 0px 32px;
 }

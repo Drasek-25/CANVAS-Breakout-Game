@@ -7,6 +7,7 @@ let paddleElevation = 78;
 let x = canvas.width / 2;
 let y = canvas.height - paddleElevation;
 
+let score = 0;
 let livesRemaining = 3;
 let ballSpeed = 4;
 let ballx = ballSpeed;
@@ -29,7 +30,11 @@ let blockY;
 let blockWidthSpacer = (((canvas.width - (blockGroupMargin * 2)) - (blockWidth * blockArrayWidth)) / (blockArrayWidth - 1));
 let blockHeightSpacer = blockHeight + blockWidthSpacer;
 let blocksRemaining = blockArrayWidth * blockArrayHeight;
-let blockArray = [
+const level1 = [
+    [0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0],
+    [0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0],
+    [0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0],
+    [0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0],
     [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
     [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
     [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
@@ -38,15 +43,13 @@ let blockArray = [
     [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
     [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
     [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
+    [0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0],
+    [0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 0, 0],
+    [0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 0, 0, 0],
+    [0, 0, 0, 0, 2, 2, 1, 1, 1, 1, 1, 2, 0, 0, 0, 0]
 ];
+let blockArray = level1.map((i) => { return i.slice() })
+
 
 let spacePressed = false;
 let rightPressed = false;
@@ -77,7 +80,7 @@ function keyUpHandler(e) {
 function drawBall() {
     ctx.beginPath();
     ctx.arc(x, y, ballRad, 0, Math.PI * 2);
-    ctx.fillStyle = "green";
+    ctx.fillStyle = "red";
     ctx.fill();
     ctx.closePath();
 }
@@ -85,7 +88,7 @@ function drawBall() {
 function drawPaddle() {
     ctx.beginPath();
     ctx.rect(paddleX, canvas.height - paddleElevation, paddleWidth, paddleHeight);
-    ctx.fillstyle = "blue";
+    ctx.fillStyle = "blue";
     ctx.fill();
     ctx.closePath();
 }
@@ -93,21 +96,58 @@ function drawPaddle() {
 function drawBlock() {
     ctx.beginPath();
     ctx.rect(blockX, blockY, blockWidth, blockHeight);
-    ctx.fillstyle = "blue";
+    ctx.fillStyle = "green";
     ctx.fill();
     ctx.closePath();
 }
 
-function startStop(){
+
+
+function startStop(elem) {
     paused = false;
-    menuChange(0);
+    menuChange(0, elem.parentNode.id);
+
 }
-function menuChange(num){
-    if (num===0){
-    document.getElementById('menu').style.display = "none";
-    } else if (num===1) {
-    document.getElementById('menu').style.display = "flex";
+function menuChange(num, elem) {
+    if (num === 0) {
+        document.getElementById(elem).style.display = "none";
+    } else if (num === 1) {
+        document.getElementById(elem).style.display = "flex";
     }
+}
+
+function restartGame() {
+    livesRemaining = 3;
+    blockArray.length = 0;
+    blockArray = level1.map((i) => { return i.slice() })
+}
+let powerUpSpeed = 2;
+let powerUpArray = [];
+let powerUpCounter = 0;
+let powerUpRad = 12;
+function powerUp(arr) {
+    powerUpCounter ++;
+    powerUpArray.push([`powerUp${powerUpCounter}`, arr[0], arr[1], arr[2]]);
+}
+
+function getPowerUp(num) {
+    if (num === 2){
+        let paddleWidthHold = paddleWidth;
+        paddleWidth += paddleWidth;
+        setTimeout(()=> {paddleWidth=paddleWidthHold}, 10000);
+    } else if(num === 3){
+
+    } else if(num === 4){
+
+    }
+}
+
+function drawPowerUp(a, b){
+    ctx.beginPath();
+    ctx.arc(a, b, powerUpRad, 0, Math.PI * 2);
+    ctx.fillStyle = "Blue";
+    ctx.fill();
+    ctx.closePath();
 }
 
 //Primary Game Loop
@@ -115,7 +155,7 @@ let paused = true;
 function draw() {
     function togglePause() {
         if (paused === true) {
-            if (spacePressed === true){
+            if (spacePressed === true) {
                 paused = false;
             }
         } else if (paused === false) {
@@ -126,10 +166,24 @@ function draw() {
             x += ballx;
             y += bally;
 
+            //powerups draw loop
+            //[0] is name [1] is powerup type [2] is x [3] is y
+            powerUpArray.forEach((i, a) => {
+                i[3] += powerUpSpeed;
+                drawPowerUp(i[2], i[3]);
+                if ((i[3]+powerUpRad >= canvas.height-paddleElevation) && (i[3]-powerUpRad <= canvas.height-paddleElevation) && (i[2]+powerUpRad > paddleX) && (i[2]-powerUpRad < paddleX + paddleWidth)){
+                    console.log(i);
+                    getPowerUp(i[1]);
+                    powerUpArray.splice(a,1);
+                } else if (i[3]+powerUpRad > canvas.height){
+                    powerUpArray.splice(a,1);
+                }
+            });
+
+
 
             blockY = 10;
             let blockArrayExisting = [];
-
             //Block generator
             for (a = 0; blockArray.length - 1 >= a; a++) {
                 blockX = blockGroupMargin - (blockWidth + blockWidthSpacer);
@@ -153,29 +207,50 @@ function draw() {
             for (c = 0; c <= blockArrayExisting.length - 1; c++) {
                 for (d = 0; d <= blockArrayExisting[c].length - 1; d++) {
                     if (blockArrayExisting[c][d][0] !== 0) {
-                        //bottom side brick horizontal collision
                         if (((y + ballRad) >= (blockArrayExisting[c][d][2] + blockHeight)) && ((y - ballRad) <= (blockArrayExisting[c][d][2] + blockHeight)) && (x + ballRad >= blockArrayExisting[c][d][1]) && (x - ballRad <= blockArrayExisting[c][d][1] + blockWidth)) {
+                            //bottom side brick horizontal collision
                             bally = -bally;
+                            if (blockArrayExisting[c][d][0] > 1) {
+                                powerUp(blockArrayExisting[c][d])
+                            }
                             blockArray[c].splice(d, 1, 0);
                             blocksRemaining--;
-                            //top side brick horizontal collision
+                            score++;
+                            break;
                         } else if ((((y + ballRad) >= (blockArrayExisting[c][d][2])) && ((y - ballRad) <= (blockArrayExisting[c][d][2]))) && ((x + ballRad >= blockArrayExisting[c][d][1]) && (x - ballRad <= blockArrayExisting[c][d][1] + blockWidth))) {
+                            //top side brick horizontal collision
                             bally = -bally;
+                            if (blockArrayExisting[c][d][0] > 1) {
+                                powerUp(blockArrayExisting[c][d])
+                            }
                             blockArray[c].splice(d, 1, 0);
                             blocksRemaining--;
-                            //left side brick collision
+                            score++;
+                            break;
                         } else if ((((y + ballRad) >= (blockArrayExisting[c][d][2])) && ((y - ballRad) <= (blockArrayExisting[c][d][2] + blockHeight))) && (x + ballRad >= blockArrayExisting[c][d][1]) && (x - ballRad <= blockArrayExisting[c][d][1])) {
+                            //left side brick collision
                             ballx = -ballx;
+                            if (blockArrayExisting[c][d][0] > 1) {
+                                powerUp(blockArrayExisting[c][d])
+                            }
                             blockArray[c].splice(d, 1, 0);
                             blocksRemaining--;
-                            //right side brick collision 
+                            score++;
+                            break;
                         } else if ((((y + ballRad) >= (blockArrayExisting[c][d][2])) && ((y - ballRad) <= (blockArrayExisting[c][d][2] + blockHeight))) && (x + ballRad >= blockArrayExisting[c][d][1] + blockWidth) && (x - ballRad <= blockArrayExisting[c][d][1] + blockWidth)) {
+                            //right side brick collision 
                             ballx = -ballx;
+                            if (blockArrayExisting[c][d][0] > 1) {
+                                powerUp(blockArrayExisting[c][d])
+                            }
                             blockArray[c].splice(d, 1, 0);
                             blocksRemaining--;
+                            score++;
+                            break;
                         }
                     }
                 }
+                document.getElementById('score').innerHTML = score;
             }
 
             // paddle controls
@@ -197,18 +272,34 @@ function draw() {
                 ballx = -ballx;
             } else if ((y + bally > canvas.height - ballRad) || (y + bally < ballRad)) {
                 bally = -bally;
-            } else if ((y + bally == canvas.height - paddleElevation) && ((x > paddleX) && (x < paddleX + paddleWidth))) {
+                //paddle collision
+            } else if ((y + bally == canvas.height - paddleElevation) && ((x + ballRad > paddleX) && (x - ballRad < paddleX + paddleWidth))) {
                 bally = -bally;
+                //Not sure if i want to use the X changing paddle or not, it feels funny atm
+                // if (rightPressed === true) {
+                //     ballx>6 ? ballx = ballx : ballx +=1;
+                // } else if (leftPressed === true){
+                //     ballx<-6 ? ballx = ballx : ballx -=1;
+                // }
+
                 // -1 life below
             } else if (y + bally > canvas.height - paddleElevation + 20) {
                 livesRemaining--;
+                document.getElementById('lives').innerHTML = livesRemaining;
                 x = canvas.width / 2;
-                y = canvas.height - paddleElevation - ballRad;
+                y = canvas.height - paddleElevation - ballRad - ballSpeed;
                 paddleX = (canvas.width - paddleWidth) / 2;
                 paused = true;
-                menuChange(1);
+                if (livesRemaining <= 0) {
+                    menuChange(1, 'gameOverMenu');
+                    restartGame();
+                } else {
+                    menuChange(1, 'pauseMenu');
+                }
+
             }
         }
+
     }
     togglePause();
 }
