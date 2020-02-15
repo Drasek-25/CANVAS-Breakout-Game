@@ -19,6 +19,7 @@ let paddleSpeed = 8;
 let paddleWidth = 80;
 let paddleHeight = 12;
 let paddleX = (canvas.width - paddleWidth) / 2;
+let paddleWidthHold = paddleWidth;
 
 let blockWidth = 30;
 let blockHeight = 15;
@@ -118,9 +119,15 @@ function menuChange(num, elem) {
 
 function restartGame() {
     livesRemaining = 3;
+    document.getElementById('lives').innerHTML = livesRemaining;
     blockArray.length = 0;
-    blockArray = level1.map((i) => { return i.slice() })
+    blockArray = level1.map((i) => { return i.slice() });
+    paddleWidth=paddleWidthHold;
+    powerUpArray = [];
+    score = 0;
+    blocksRemaining = blockArrayWidth * blockArrayHeight;
 }
+
 let powerUpSpeed = 2;
 let powerUpArray = [];
 let powerUpCounter = 0;
@@ -132,7 +139,6 @@ function powerUp(arr) {
 
 function getPowerUp(num) {
     if (num === 2){
-        let paddleWidthHold = paddleWidth;
         paddleWidth += paddleWidth;
         setTimeout(()=> {paddleWidth=paddleWidthHold}, 10000);
     } else if(num === 3){
@@ -171,7 +177,7 @@ function draw() {
             powerUpArray.forEach((i, a) => {
                 i[3] += powerUpSpeed;
                 drawPowerUp(i[2], i[3]);
-                if ((i[3]+powerUpRad >= canvas.height-paddleElevation) && (i[3]-powerUpRad <= canvas.height-paddleElevation) && (i[2]+powerUpRad > paddleX) && (i[2]-powerUpRad < paddleX + paddleWidth)){
+                if ((i[3]+powerUpRad >= canvas.height-paddleElevation) && (i[3]-powerUpRad <= canvas.height-paddleElevation)){
                     console.log(i);
                     getPowerUp(i[1]);
                     powerUpArray.splice(a,1);
