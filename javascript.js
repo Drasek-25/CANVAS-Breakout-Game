@@ -30,26 +30,74 @@ let blockX;
 let blockY;
 let blockWidthSpacer = (((canvas.width - (blockGroupMargin * 2)) - (blockWidth * blockArrayWidth)) / (blockArrayWidth - 1));
 let blockHeightSpacer = blockHeight + blockWidthSpacer;
-let blocksRemaining = blockArrayWidth * blockArrayHeight;
+let blocksRemaining = 0;
+
 const level1 = [
     [0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0],
     [0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0],
-    [0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0],
+    [0, 0, 1, 1, 1, 1, 1, 2, 1, 1, 1, 1, 1, 1, 0, 0],
     [0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0],
-    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+    [1, 1, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 1, 1, 2, 1, 1],
+    [1, 1, 1, 1, 1, 1, 3, 1, 1, 1, 1, 1, 1, 1, 1, 1],
     [0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0],
-    [0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 0, 0],
-    [0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 0, 0, 0],
-    [0, 0, 0, 0, 2, 2, 1, 1, 1, 1, 1, 2, 0, 0, 0, 0]
+    [0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 2, 1, 1, 1, 0, 0],
+    [0, 0, 0, 1, 1, 2, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0],
+    [0, 0, 0, 0, 1, 1, 1, 1, 3, 1, 1, 1, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+];
+const level2 = [
+    [0, 0, 0, 0, 1, 0, 1, 1, 1, 1, 0, 1, 0, 0, 0, 0],
+    [0, 0, 0, 1, 1, 0, 1, 1, 1, 1, 0, 1, 1, 0, 0, 0],
+    [0, 0, 1, 1, 1, 0, 1, 1, 1, 1, 0, 1, 1, 1, 0, 0],
+    [0, 1, 1, 1, 1, 0, 1, 1, 1, 1, 0, 1, 1, 1, 1, 0],
+    [1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1],
+    [1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1],
+    [1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1],
+    [1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1],
+    [0, 1, 1, 1, 1, 0, 1, 1, 1, 1, 0, 1, 1, 1, 1, 0],
+    [0, 0, 1, 1, 1, 0, 1, 1, 1, 1, 0, 1, 1, 2, 0, 0],
+    [0, 0, 0, 1, 1, 0, 1, 1, 1, 1, 0, 1, 2, 0, 0, 0],
+    [0, 0, 0, 0, 2, 0, 3, 3, 3, 3, 0, 2, 0, 0, 0, 0]
+];
+const level3 = [
+    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+    [1, 1, 1, 1, 1, 3, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+    [1, 1, 1, 2, 1, 1, 1, 1, 1, 1, 1, 3, 1, 1, 1, 1],
+    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 1],
+    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+    [1, 1, 1, 1, 3, 1, 1, 1, 2, 1, 1, 1, 1, 1, 1, 1]
 ];
 let blockArray = level1.map((i) => { return i.slice() })
+blocksRemain();
+function blocksRemain() {
+    blocksRemaining = 0;
+    for (a = 0; a < blockArray.length; a++) {
+        for (b = 0; b < blockArray[a].length; b++) {
+            if (blockArray[a][b] > 0) {
+                blocksRemaining++;
+            }
+        }
+    }
+}
 
 
 let spacePressed = false;
@@ -122,10 +170,10 @@ function restartGame() {
     document.getElementById('lives').innerHTML = livesRemaining;
     blockArray.length = 0;
     blockArray = level1.map((i) => { return i.slice() });
-    paddleWidth=paddleWidthHold;
+    paddleWidth = paddleWidthHold;
     powerUpArray = [];
     score = 0;
-    blocksRemaining = blockArrayWidth * blockArrayHeight;
+    blocksRemain();
 }
 
 let powerUpSpeed = 2;
@@ -133,27 +181,42 @@ let powerUpArray = [];
 let powerUpCounter = 0;
 let powerUpRad = 12;
 function powerUp(arr) {
-    powerUpCounter ++;
+    powerUpCounter++;
     powerUpArray.push([`powerUp${powerUpCounter}`, arr[0], arr[1], arr[2]]);
 }
 
+let laserBall = false;
 function getPowerUp(num) {
-    if (num === 2){
-        paddleWidth += paddleWidth;
-        setTimeout(()=> {paddleWidth=paddleWidthHold}, 10000);
-    } else if(num === 3){
-
-    } else if(num === 4){
+    if (num === 2) {
+        if (paddleWidth - 1 < paddleWidthHold) { paddleWidth += paddleWidth };
+        setTimeout(() => { paddleWidth = paddleWidthHold }, 10000);
+    } else if (num === 3) {
+        laserBall = true;
+        setTimeout(() => { laserBall = false }, 10000);
+    } else if (num === 4) {
 
     }
 }
 
-function drawPowerUp(a, b){
+function drawPowerUp(a, b) {
     ctx.beginPath();
-    ctx.arc(a, b, powerUpRad, 0, Math.PI * 2);
+    ctx.arc(a + blockWidth / 2, b + blockWidth / 2, powerUpRad, 0, Math.PI * 2);
     ctx.fillStyle = "Blue";
     ctx.fill();
     ctx.closePath();
+}
+
+let currentLevel = 1;
+function nextLevel() {
+    menuChange(1, 'pauseMenu');
+    x = canvas.width / 2;
+    y = canvas.height - paddleElevation - ballRad - ballSpeed;
+    paddleX = (canvas.width - paddleWidth) / 2;
+    paused = true;
+    currentLevel += 1;
+    if (currentLevel === 2) { blockArray = level2.map((i) => { return i.slice() }) };
+    if (currentLevel === 3) { blockArray = level3.map((i) => { return i.slice() }) };
+    blocksRemain();
 }
 
 //Primary Game Loop
@@ -177,15 +240,13 @@ function draw() {
             powerUpArray.forEach((i, a) => {
                 i[3] += powerUpSpeed;
                 drawPowerUp(i[2], i[3]);
-                if ((i[3]+powerUpRad >= canvas.height-paddleElevation) && (i[3]-powerUpRad <= canvas.height-paddleElevation)){
-                    console.log(i);
+                if ((i[3] + powerUpRad >= canvas.height - paddleElevation) && (i[3] - powerUpRad <= canvas.height - paddleElevation) && (i[2] + powerUpRad > paddleX) && (i[2] - powerUpRad < paddleX + paddleWidth)) {
                     getPowerUp(i[1]);
-                    powerUpArray.splice(a,1);
-                } else if (i[3]+powerUpRad > canvas.height){
-                    powerUpArray.splice(a,1);
+                    powerUpArray.splice(a, 1);
+                } else if (i[3] + powerUpRad > canvas.height) {
+                    powerUpArray.splice(a, 1);
                 }
             });
-
 
 
             blockY = 10;
@@ -205,8 +266,10 @@ function draw() {
                 }
             }
             //win condition
+
             if (blocksRemaining === 0) {
-                console.log('you win');
+                nextLevel();
+
             }
 
             //brick Collision
@@ -215,7 +278,7 @@ function draw() {
                     if (blockArrayExisting[c][d][0] !== 0) {
                         if (((y + ballRad) >= (blockArrayExisting[c][d][2] + blockHeight)) && ((y - ballRad) <= (blockArrayExisting[c][d][2] + blockHeight)) && (x + ballRad >= blockArrayExisting[c][d][1]) && (x - ballRad <= blockArrayExisting[c][d][1] + blockWidth)) {
                             //bottom side brick horizontal collision
-                            bally = -bally;
+                            if (laserBall === false) { bally = -bally };
                             if (blockArrayExisting[c][d][0] > 1) {
                                 powerUp(blockArrayExisting[c][d])
                             }
@@ -225,7 +288,7 @@ function draw() {
                             break;
                         } else if ((((y + ballRad) >= (blockArrayExisting[c][d][2])) && ((y - ballRad) <= (blockArrayExisting[c][d][2]))) && ((x + ballRad >= blockArrayExisting[c][d][1]) && (x - ballRad <= blockArrayExisting[c][d][1] + blockWidth))) {
                             //top side brick horizontal collision
-                            bally = -bally;
+                            if (laserBall === false) { bally = -bally };
                             if (blockArrayExisting[c][d][0] > 1) {
                                 powerUp(blockArrayExisting[c][d])
                             }
@@ -235,7 +298,7 @@ function draw() {
                             break;
                         } else if ((((y + ballRad) >= (blockArrayExisting[c][d][2])) && ((y - ballRad) <= (blockArrayExisting[c][d][2] + blockHeight))) && (x + ballRad >= blockArrayExisting[c][d][1]) && (x - ballRad <= blockArrayExisting[c][d][1])) {
                             //left side brick collision
-                            ballx = -ballx;
+                            if (laserBall === false) { bally = -bally };
                             if (blockArrayExisting[c][d][0] > 1) {
                                 powerUp(blockArrayExisting[c][d])
                             }
@@ -245,7 +308,7 @@ function draw() {
                             break;
                         } else if ((((y + ballRad) >= (blockArrayExisting[c][d][2])) && ((y - ballRad) <= (blockArrayExisting[c][d][2] + blockHeight))) && (x + ballRad >= blockArrayExisting[c][d][1] + blockWidth) && (x - ballRad <= blockArrayExisting[c][d][1] + blockWidth)) {
                             //right side brick collision 
-                            ballx = -ballx;
+                            if (laserBall === false) { bally = -bally };
                             if (blockArrayExisting[c][d][0] > 1) {
                                 powerUp(blockArrayExisting[c][d])
                             }
@@ -296,6 +359,7 @@ function draw() {
                 y = canvas.height - paddleElevation - ballRad - ballSpeed;
                 paddleX = (canvas.width - paddleWidth) / 2;
                 paused = true;
+                powerUpArray = [];
                 if (livesRemaining <= 0) {
                     menuChange(1, 'gameOverMenu');
                     restartGame();
@@ -309,8 +373,4 @@ function draw() {
     }
     togglePause();
 }
-
-
-
 setInterval(draw, frameRate);
-
