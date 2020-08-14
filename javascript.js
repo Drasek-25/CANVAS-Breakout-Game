@@ -108,7 +108,7 @@ let rightPressed = false;
 let leftPressed = false;
 document.addEventListener("keydown", keyDownHandler);
 document.addEventListener("keyup", keyUpHandler);
-// window.addEventListener("deviceorientation", handleOrientation);
+window.addEventListener("deviceorientation", handleOrientation);
 
 //handles desktop controls
 function keyDownHandler(e) {
@@ -130,19 +130,19 @@ function keyUpHandler(e) {
    }
 }
 
-// // handles mobile phone orientation and control
-// function handleOrientation(e) {
-//    const mobileYRange = 20;
-//    let mobileY = e.alpha;
-//    if (mobileY < -mobileYRange) {
-//       leftPressed = true;
-//    } else if (mobileY > mobileYRange) {
-//       rightPressed = true;
-//    } else {
-//       leftPressed = false;
-//       rightPressed = false;
-//    }
-// }
+// handles mobile phone orientation and control
+function handleOrientation(e) {
+   const mobileYRange = 2.5;
+   let mobileY = e.gamma;
+   if (mobileY < -mobileYRange) {
+      leftPressed = true;
+   } else if (mobileY > mobileYRange) {
+      rightPressed = true;
+   } else {
+      leftPressed = false;
+      rightPressed = false;
+   }
+}
 
 function drawBall() {
    ctx.beginPath();
