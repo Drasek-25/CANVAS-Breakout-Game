@@ -145,7 +145,7 @@ function handleOrientation(e) {
 function drawBall() {
    ctx.beginPath();
    ctx.arc(x, y, ballRad, 0, Math.PI * 2);
-   ctx.fillStyle = "red";
+   ctx.fillStyle = "#01FE9F";
    ctx.fill();
    ctx.closePath();
 }
@@ -158,7 +158,7 @@ function drawPaddle() {
       paddleWidth,
       paddleHeight
    );
-   ctx.fillStyle = "blue";
+   ctx.fillStyle = "#0215E7";
    ctx.fill();
    ctx.closePath();
 }
@@ -166,7 +166,7 @@ function drawPaddle() {
 function drawBlock() {
    ctx.beginPath();
    ctx.rect(blockX, blockY, blockWidth, blockHeight);
-   ctx.fillStyle = "green";
+   ctx.fillStyle = "#D9F746";
    ctx.fill();
    ctx.closePath();
 }
@@ -442,3 +442,4 @@ function draw() {
    togglePause();
 }
 setInterval(draw, frameRate);
+startStop();
