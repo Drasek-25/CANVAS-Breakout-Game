@@ -111,18 +111,6 @@ document.addEventListener("keyup", keyUpHandler);
 //check if listener works on device
 if (window.DeviceOrientationEvent) {
    window.addEventListener("deviceorientation", handleOrientation);
-} else {
-   // permession check required for iOS
-   DeviceOrientationEvent.requestPermission()
-      .then((res) => {
-         if (res === "granted") {
-            window.addEventListener("deviceorientation", handleOrientation);
-         }
-      })
-      .catch((err) => console.log(err));
-   if (window.DeviceOrientationEvent) {
-      window.addEventListener("deviceorientation", handleOrientation);
-   }
 }
 
 //handles desktop controls
