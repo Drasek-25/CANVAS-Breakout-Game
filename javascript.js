@@ -442,4 +442,3 @@ function draw() {
    togglePause();
 }
 setInterval(draw, frameRate);
-startStop();
