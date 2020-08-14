@@ -109,3 +109,19 @@ a {
 #aboutMenu {
    display: none;
 }
+
+@media only screen and (max-width: 700px) {
+   .wrapper,
+   canvas {
+      width: 99%;
+      height: auto;
+      margin-top: 5%;
+   }
+   p,
+   .menuButton {
+      font-size: 10px;
+   }
+   h3 {
+      font-size: 18px;
+   }
+}

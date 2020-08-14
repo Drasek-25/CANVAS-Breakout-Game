@@ -103,6 +103,7 @@ function blocksRemain() {
    }
 }
 
+//handles desktop controls
 let spacePressed = false;
 let rightPressed = false;
 let leftPressed = false;
@@ -129,6 +130,7 @@ function keyUpHandler(e) {
    }
 }
 
+//handles mobile phone orientation and control
 function handleOrientation(e) {
    const mobileYRange = 3.5;
    let mobileY = e.alpha;
