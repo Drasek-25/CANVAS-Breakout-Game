@@ -1,61 +1,121 @@
 <!DOCTYPE html>
 <html lang="en">
+   <head>
+      <meta charset="UTF-8" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+      <title>Super Breakout</title>
+      <link rel="stylesheet" type="text/css" href="main.css" />
+      <style>
+         @import url("https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap");
+      </style>
+   </head>
 
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Super Breakout</title>
-  <link rel="stylesheet" type="text/css" href="main.css">
-
-
-</head>
-
-<body>
-  <div class="wrapper">
-    <div class="menuContainer" id="startMenu">
-      <h1>Super Breakout</h1>
-      <input type="button" id="button1" value="Start Game" onclick="startStop(this);">
-      <input type="button" id="button1" value="About" onclick="menuChange(0, 'startMenu'), menuChange(1, 'aboutMenu');">
-
-    </div>
-    <div class="menuContainer" id="gameOverMenu">
-      <h1>Super Breakout</h1>
-      <h3>Game Over!</h3>
-      <input type="button" id="button1" value="Play Again" onclick="startStop(this);">
-      <input type="button" id="button1" value="About" onclick="menuChange(0, 'gameOverMenu'), menuChange(1, 'aboutMenu');">
-
-    </div>
-    <div class="menuContainer" id="pauseMenu">
-      <h1>Super Breakout</h1>
-      <h3>Paused</h3>
-      <input type="button" id="button1" value="Resume Game" onclick="startStop(this);">
-      <input type="button" id="button1" value="Restart Game" onclick="startStop(this), restartGame();">
-      <input type="button" id="button1" value="About" onclick="menuChange(0, 'pauseMenu'), menuChange(1, 'aboutMenu');">
-    </div>
-    <div class="menuContainer" id="aboutMenu">
-      <p>This game was built by Patrick Marschlowitz 
-        using the MDN breakout game guide as a reference. 
-        For more of my projects checkout my github <a href="https://github.com/Drasek-25">here.</a>
-        </p>
-      <input type="button" id="button1" value="Resume Game" onclick="startStop(this);">
-      <input type="button" id="button1" value="Restart Game" onclick="startStop(this), restartGame();">
-    </div>
-    <div class="headsUp">
-      <div class='headsUpCol'>
-        <h5>Score</h5>
-        <span id="score">0</span>
+   <body>
+      <div class="container">
+         <div class="wrapper">
+            <div class="scoreBoard">
+               <div class="livesDiv">
+                  <span class="livesText">
+                     Lives:
+                  </span>
+                  <span class="livesText" id="lives">
+                     3
+                  </span>
+               </div>
+               <div class="scoreDiv">
+                  <span class="scoreText">
+                     Score:
+                  </span>
+                  <span class="scoreText" id="score">
+                     0
+                  </span>
+               </div>
+            </div>
+            <div class="menu" id="startMenu">
+               <img
+                  src="./assets/outrunSun.png"
+                  alt="outrunSun"
+                  class="outrunSun"
+               />
+               <h3>Breakout</h3>
+               <button class="menuButton" onclick="startStop(this);">
+                  Start Game
+               </button>
+               <button
+                  class="menuButton"
+                  onclick="menuChange(0, 'startMenu'), menuChange(1, 'aboutMenu');"
+               >
+                  About
+               </button>
+            </div>
+            <div class="menu" id="aboutMenu">
+               <img
+                  src="./assets/outrunSun.png"
+                  alt="outrunSun"
+                  class="outrunSun"
+               />
+               <h3>About</h3>
+               <p>
+                  This game was built by Patrick Marschlowitz using the MDN
+                  breakout game guide as a reference. For more of my projects
+                  checkout my
+                  <a href="https://webdevpat.com">portfolio.</a>
+               </p>
+               <button class="menuButton" onclick="startStop(this);">
+                  Resume Game
+               </button>
+               <button
+                  class="menuButton"
+                  onclick="startStop(this), restartGame();"
+               >
+                  Restart Game
+               </button>
+            </div>
+            <div class="menu" id="pauseMenu">
+               <img
+                  src="./assets/outrunSun.png"
+                  alt="outrunSun"
+                  class="outrunSun"
+               />
+               <h3>Paused</h3>
+               <button class="menuButton" onclick="startStop(this);">
+                  Resume Game
+               </button>
+               <button
+                  class="menuButton"
+                  onclick="startStop(this), restartGame();"
+               >
+                  Restart Game
+               </button>
+               <button
+                  class="menuButton"
+                  onclick="menuChange(0, 'pauseMenu'), menuChange(1, 'aboutMenu');"
+               >
+                  About
+               </button>
+            </div>
+            <div class="menu" id="gameOverMenu">
+               <img
+                  src="./assets/outrunSun.png"
+                  alt="outrunSun"
+                  class="outrunSun"
+               />
+               <h3>Game Over</h3>
+               <button class="menuButton" onclick="startStop(this);">
+                  Play Again
+               </button>
+               <button
+                  class="menuButton"
+                  onclick="menuChange(0, 'gameOverMenu'), menuChange(1, 'aboutMenu');"
+               >
+                  About
+               </button>
+            </div>
+            <canvas id="myCanvas" width="600" height="800"></canvas>
+         </div>
       </div>
-      <div class='headsUpCol'>
-        <h5>Lives</h5>
-        <span id="lives">3</span>
-      </div>
-    </div>
-    <canvas id="myCanvas" width="600" height="800"></canvas>
-  </div>
 
-  <script src="./javascript.js"></script>
-
-</body>
-
+      <script src="./javascript.js"></script>
+   </body>
 </html>

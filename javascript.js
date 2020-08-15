@@ -108,8 +108,12 @@ let rightPressed = false;
 let leftPressed = false;
 document.addEventListener("keydown", keyDownHandler);
 document.addEventListener("keyup", keyUpHandler);
-window.addEventListener("deviceorientation", handleOrientation);
+//check if listener works on device
+if (window.DeviceOrientationEvent) {
+   window.addEventListener("deviceorientation", handleOrientation);
+}
 
+//handles desktop controls
 function keyDownHandler(e) {
    if (e.key == "Right" || e.key == "ArrowRight") {
       rightPressed = true;
@@ -129,9 +133,10 @@ function keyUpHandler(e) {
    }
 }
 
+// handles mobile phone orientation and control
 function handleOrientation(e) {
-   const mobileYRange = 3.5;
-   let mobileY = e.alpha;
+   const mobileYRange = 2.5;
+   let mobileY = e.gamma;
    if (mobileY < -mobileYRange) {
       leftPressed = true;
    } else if (mobileY > mobileYRange) {
@@ -145,7 +150,7 @@ function handleOrientation(e) {
 function drawBall() {
    ctx.beginPath();
    ctx.arc(x, y, ballRad, 0, Math.PI * 2);
-   ctx.fillStyle = "red";
+   ctx.fillStyle = "#01FE9F";
    ctx.fill();
    ctx.closePath();
 }
@@ -158,7 +163,7 @@ function drawPaddle() {
       paddleWidth,
       paddleHeight
    );
-   ctx.fillStyle = "blue";
+   ctx.fillStyle = "#0215E7";
    ctx.fill();
    ctx.closePath();
 }
@@ -166,7 +171,7 @@ function drawPaddle() {
 function drawBlock() {
    ctx.beginPath();
    ctx.rect(blockX, blockY, blockWidth, blockHeight);
-   ctx.fillStyle = "green";
+   ctx.fillStyle = "#D9F746";
    ctx.fill();
    ctx.closePath();
 }
