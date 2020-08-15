@@ -15,105 +15,107 @@
    <body>
       <div class="container">
          <div class="wrapper">
-            <div class="scoreBoard">
-               <div class="livesDiv">
-                  <span class="livesText">
-                     Lives:
-                  </span>
-                  <span class="livesText" id="lives">
-                     3
-                  </span>
+            <div class="crt">
+               <div class="scoreBoard">
+                  <div class="livesDiv">
+                     <span class="livesText">
+                        Lives:
+                     </span>
+                     <span class="livesText" id="lives">
+                        3
+                     </span>
+                  </div>
+                  <div class="scoreDiv">
+                     <span class="scoreText">
+                        Score:
+                     </span>
+                     <span class="scoreText" id="score">
+                        0
+                     </span>
+                  </div>
                </div>
-               <div class="scoreDiv">
-                  <span class="scoreText">
-                     Score:
-                  </span>
-                  <span class="scoreText" id="score">
-                     0
-                  </span>
+               <div class="menu" id="startMenu">
+                  <img
+                     src="./assets/outrunSun.png"
+                     alt="outrunSun"
+                     class="outrunSun"
+                  />
+                  <h3>Breakout</h3>
+                  <button class="menuButton" onclick="startStop(this);">
+                     Start Game
+                  </button>
+                  <button
+                     class="menuButton"
+                     onclick="menuChange(0, 'startMenu'), menuChange(1, 'aboutMenu');"
+                  >
+                     About
+                  </button>
                </div>
+               <div class="menu" id="aboutMenu">
+                  <img
+                     src="./assets/outrunSun.png"
+                     alt="outrunSun"
+                     class="outrunSun"
+                  />
+                  <h3>About</h3>
+                  <p>
+                     This game was built by Patrick Marschlowitz using the MDN
+                     breakout game guide as a reference. For more of my projects
+                     checkout my
+                     <a href="https://webdevpat.com">portfolio.</a>
+                  </p>
+                  <button class="menuButton" onclick="startStop(this);">
+                     Resume Game
+                  </button>
+                  <button
+                     class="menuButton"
+                     onclick="startStop(this), restartGame();"
+                  >
+                     Restart Game
+                  </button>
+               </div>
+               <div class="menu" id="pauseMenu">
+                  <img
+                     src="./assets/outrunSun.png"
+                     alt="outrunSun"
+                     class="outrunSun"
+                  />
+                  <h3>Paused</h3>
+                  <button class="menuButton" onclick="startStop(this);">
+                     Resume Game
+                  </button>
+                  <button
+                     class="menuButton"
+                     onclick="startStop(this), restartGame();"
+                  >
+                     Restart Game
+                  </button>
+                  <button
+                     class="menuButton"
+                     onclick="menuChange(0, 'pauseMenu'), menuChange(1, 'aboutMenu');"
+                  >
+                     About
+                  </button>
+               </div>
+               <div class="menu" id="gameOverMenu">
+                  <img
+                     src="./assets/outrunSun.png"
+                     alt="outrunSun"
+                     class="outrunSun"
+                  />
+                  <h3>Game Over</h3>
+                  <button class="menuButton" onclick="startStop(this);">
+                     Play Again
+                  </button>
+                  <button
+                     class="menuButton"
+                     onclick="menuChange(0, 'gameOverMenu'), menuChange(1, 'aboutMenu');"
+                  >
+                     About
+                  </button>
+               </div>
+               <canvas id="myCanvas" width="600" height="800"></canvas>
             </div>
-            <div class="menu" id="startMenu">
-               <img
-                  src="./assets/outrunSun.png"
-                  alt="outrunSun"
-                  class="outrunSun"
-               />
-               <h3>Breakout</h3>
-               <button class="menuButton" onclick="startStop(this);">
-                  Start Game
-               </button>
-               <button
-                  class="menuButton"
-                  onclick="menuChange(0, 'startMenu'), menuChange(1, 'aboutMenu');"
-               >
-                  About
-               </button>
-            </div>
-            <div class="menu" id="aboutMenu">
-               <img
-                  src="./assets/outrunSun.png"
-                  alt="outrunSun"
-                  class="outrunSun"
-               />
-               <h3>About</h3>
-               <p>
-                  This game was built by Patrick Marschlowitz using the MDN
-                  breakout game guide as a reference. For more of my projects
-                  checkout my
-                  <a href="https://webdevpat.com">portfolio.</a>
-               </p>
-               <button class="menuButton" onclick="startStop(this);">
-                  Resume Game
-               </button>
-               <button
-                  class="menuButton"
-                  onclick="startStop(this), restartGame();"
-               >
-                  Restart Game
-               </button>
-            </div>
-            <div class="menu" id="pauseMenu">
-               <img
-                  src="./assets/outrunSun.png"
-                  alt="outrunSun"
-                  class="outrunSun"
-               />
-               <h3>Paused</h3>
-               <button class="menuButton" onclick="startStop(this);">
-                  Resume Game
-               </button>
-               <button
-                  class="menuButton"
-                  onclick="startStop(this), restartGame();"
-               >
-                  Restart Game
-               </button>
-               <button
-                  class="menuButton"
-                  onclick="menuChange(0, 'pauseMenu'), menuChange(1, 'aboutMenu');"
-               >
-                  About
-               </button>
-            </div>
-            <div class="menu" id="gameOverMenu">
-               <img
-                  src="./assets/outrunSun.png"
-                  alt="outrunSun"
-                  class="outrunSun"
-               />
-               <h3>Game Over</h3>
-               <button class="menuButton" onclick="startStop(this);">
-                  Play Again
-               </button>
-               <button
-                  class="menuButton"
-                  onclick="menuChange(0, 'gameOverMenu'), menuChange(1, 'aboutMenu');"
-               >
-                  About
-               </button>
-            </div>
-            <canvas id="myCanvas" width="600" height="800"></canvas>
          </div>
       </div>
 
