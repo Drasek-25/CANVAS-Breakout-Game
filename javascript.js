@@ -168,9 +168,11 @@ function drawPaddle() {
    ctx.closePath();
 }
 
+const blockImage = document.getElementById("blockImage");
 function drawBlock() {
    ctx.beginPath();
-   ctx.rect(blockX, blockY, blockWidth, blockHeight);
+   ctx.drawImage(blockImage, blockX, blockY, blockWidth, blockHeight);
+   // ctx.rect(blockX, blockY, blockWidth, blockHeight);
    ctx.fillStyle = "#D9F746";
    ctx.fill();
    ctx.closePath();
@@ -227,10 +229,12 @@ function getPowerUp(num) {
    } else if (num === 4) {
    }
 }
+const powerUpImage = document.getElementById("powerUpImage");
 
 function drawPowerUp(a, b) {
    ctx.beginPath();
-   ctx.arc(a + blockWidth / 2, b + blockWidth / 2, powerUpRad, 0, Math.PI * 2);
+   ctx.drawImage(powerUpImage, a, b, 30, 30);
+   // ctx.arc(a + blockWidth / 2, b + blockWidth / 2, powerUpRad, 0, Math.PI * 2);
    ctx.fillStyle = "Blue";
    ctx.fill();
    ctx.closePath();
