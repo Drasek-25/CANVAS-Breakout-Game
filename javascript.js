@@ -155,27 +155,35 @@ function drawBall() {
    ctx.closePath();
 }
 
+const paddleImage = document.getElementById("paddle");
 function drawPaddle() {
-   ctx.beginPath();
-   ctx.rect(
+   ctx.drawImage(
+      paddleImage,
       paddleX,
       canvas.height - paddleElevation,
       paddleWidth,
       paddleHeight
    );
-   ctx.fillStyle = "#0215E7";
-   ctx.fill();
-   ctx.closePath();
+   // ctx.beginPath();
+   // ctx.rect(
+   //    paddleX,
+   //    canvas.height - paddleElevation,
+   //    paddleWidth,
+   //    paddleHeight
+   // );
+   // ctx.fillStyle = "#0215E7";
+   // ctx.fill();
+   // ctx.closePath();
 }
 
 const blockImage = document.getElementById("blockImage");
 function drawBlock() {
-   ctx.beginPath();
+   // ctx.beginPath();
    ctx.drawImage(blockImage, blockX, blockY, blockWidth, blockHeight);
    // ctx.rect(blockX, blockY, blockWidth, blockHeight);
-   ctx.fillStyle = "#D9F746";
-   ctx.fill();
-   ctx.closePath();
+   // ctx.fillStyle = "#D9F746";
+   // ctx.fill();
+   // ctx.closePath();
 }
 
 function startStop(elem) {
@@ -232,12 +240,12 @@ function getPowerUp(num) {
 const powerUpImage = document.getElementById("powerUpImage");
 
 function drawPowerUp(a, b) {
-   ctx.beginPath();
+   // ctx.beginPath();
    ctx.drawImage(powerUpImage, a, b, 30, 30);
    // ctx.arc(a + blockWidth / 2, b + blockWidth / 2, powerUpRad, 0, Math.PI * 2);
-   ctx.fillStyle = "Blue";
-   ctx.fill();
-   ctx.closePath();
+   // ctx.fillStyle = "Blue";
+   // ctx.fill();
+   // ctx.closePath();
 }
 
 let currentLevel = 1;

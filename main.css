@@ -25,7 +25,7 @@ html {
    position: absolute;
 }
 canvas {
-   background-image: linear-gradient(#ea16d9, #711c91);
+   background-image: url("./assets/background.png");
    border: 2px solid #f7f86b;
 }
 .scoreBoard {
